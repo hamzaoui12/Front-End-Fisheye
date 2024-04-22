@@ -2,36 +2,204 @@
 <html>
   <head>
     <link href="css/style.css" rel="stylesheet" type="text/css" />
-    <meta charset="utf-8">
-    <link rel="icon" type="image/png" href="assets/favicon.png">
-    <link href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap" rel="stylesheet">
-    <title>Fisheye - photographe </title>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <link
+      href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/67de550683.js"
+      crossorigin="anonymous"
+    ></script>
+    <title>Fisheye - photographe</title>
   </head>
   <body>
     <header>
-      <img src="assets/images/logo.png" class="logo" />
+      <a href="index.html" aria-label="Retourner à la page d'accueil">
+        <img
+          src="assets/images/logo.png"
+          class="logo"
+          alt="Fisheye Home page"
+        />
+      </a>
     </header>
-    <main id="main">
+    <main id="main" aria-hidden="false" class="opened">
       <div class="photograph-header">
-        <button class="contact_button" onclick="displayModal()">Contactez-moi</button>
+        <button
+          class="contact_button"
+          onclick="displayModal()"
+          aria-label="cliquer ici pour ouvrir le formulaire de contact"
+        >
+          Contactez-moi
+        </button>
+      </div>
+
+      <div class="filter">
+        <span class="filter_title">Trier par</span>
+        <div class="dropdown">
+          <button
+            class="btn_list"
+            type="button"
+            role="button"
+            tabindex="0"
+            aria-haspopup="listbox"
+          >
+            <span id="current_filter">Popularité</span>
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <ul
+            class="dropdown_content"
+            aria-hidden="true"
+            role="listbox"
+            tabindex="0"
+          >
+            <li
+              class="menu-item"
+              role="option"
+              aria-selected="true"
+              tabindex="0"
+            >
+              <button>Titre</button>
+            </li>
+            <li
+              class="menu-item"
+              role="option"
+              aria-selected="true"
+              tabindex="0"
+            >
+              <button>Popularité</button>
+            </li>
+            <li
+              class="menu-item"
+              role="option"
+              aria-selected="true"
+              tabindex="0"
+            >
+              <button>Date</button>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="afficherMedias"></div>
+
+      <div class="encart">
+        <div class="likes">
+          <span class="textEncart" id="nbLikes"></span>
+          <i class="fa-solid fa-heart"></i>
+        </div>
+        <span id="price"></span>
+      </div>
+      <div class="lightbox" role="dialog" aria-label="image closeup view">
+        <button class="lightbox_close" onclick="closeLightbox()" role="button">
+          X
+        </button>
+        <button
+          class="lightbox_next"
+          onclick="next()"
+          aria-label="Next image"
+          role="link"
+        >
+          <i class="fa fa-chevron-right"></i>
+        </button>
+        <button
+          class="lightbox_prev"
+          onclick="previous()"
+          aria-label="Previous image"
+          role="link"
+        >
+          <i class="fa fa-chevron-left"></i>
+        </button>
+        <div class="lightbox_modal"></div>
       </div>
     </main>
-    <div id="contact_modal">
-			<div class="modal">
-				<header>
-          <h2>Contactez-moi</h2>
-          <img src="assets/icons/close.svg" onclick="closeModal()" />
+
+    <div
+      id="contact_modal"
+      role="dialog"
+      aria-modal="true"
+      aria-describedby="modalTitle"
+    >
+      <div class="modal">
+        <header>
+          <h2 id="modalTitle" class="modalTitle">Contactez-moi</h2>
+          <button
+            class="close"
+            aria-label="Fermer la modale"
+            onclick="closeModal()"
+          >
+            <img
+              src="assets/icons/close.svg"
+              alt="button pour fermer le modal"
+              class="close"
+            />
+          </button>
         </header>
-				<form>
-					<div>
-						<label>Prénom</label>
-						<input />
-					</div>
-          <button class="contact_button">Envoyer</button>
-				</form>
-			</div>
-		</div>
-    <script src="/scripts/pages/photographer.js"></script>
+        <span class="modal_name"></span>
+        <form class="contact_form" method="post" action="#">
+          <div>
+            <label for="firstName">Prénom</label>
+            <input
+              type="text"
+              id="firstName"
+              name="firstName"
+              aria-label="firstName"
+              aria-required="true"
+              aria-invalid="false"
+              class="input-form"
+            />
+          </div>
+
+          <div>
+            <label for="LastName">Nom</label>
+            <input
+              type="text"
+              id="LastName"
+              name="LastName"
+              aria-label="LastName"
+              aria-required="true"
+              aria-invalid="false"
+              class="input-form"
+            />
+          </div>
+          <div>
+            <label for="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              aria-label="email"
+              aria-required="true"
+              aria-invalid="false"
+              class="input-form"
+            />
+          </div>
+
+          <div>
+            <label for="message">Message</label>
+            <textarea
+              id="message"
+              name="message"
+              rows="5"
+              cols="50"
+              aria-label="message"
+              aria-required="true"
+              aria-invalid="false"
+            ></textarea>
+          </div>
+          <input
+            type="submit"
+            class="contact_button"
+            value="Envoyer"
+            id="envoi"
+            aria-label="envoyer"
+          />
+        </form>
+      </div>
+    </div>
+    <script type="module" src="/scripts/pages/photographer.js"></script>
     <script src="/scripts/utils/contactForm.js"></script>
+    <script src="scripts/utils/lightbox.js"></script>
+    <script src="scripts/utils/dropdown.js"></script>
   </body>
 </html>
