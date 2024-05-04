@@ -1,16 +1,25 @@
 export function MediasTemplate(data) {
+  // Destructuring des données
   const { id, photographerId, title, image, video, likes, date, price } = data;
+  // Construction des chemins d'accès aux images et vidéos
   const picture = `./assets/images/${photographerId}/${image}`;
   const mediaVideo = `./assets/images/${photographerId}/${video}`;
 
+  // Fonction pour créer et retourner l'élément DOM représentant un média dans la galerie
   function getPictursDom(index) {
+    // Création de l'article
     const article = document.createElement("article");
     article.setAttribute("class", "media");
 
+    // Création de la section
     const section = document.createElement("section");
+
+    // Création du paragraphe contenant le titre du média
     const p = document.createElement("p");
     p.setAttribute("aria-label", title);
     p.textContent = title;
+
+    // Création du conteneur pour les likes
     const pLike = document.createElement("div");
     const comptLike = document.createElement("span");
     comptLike.setAttribute("role", "text");
@@ -23,6 +32,7 @@ export function MediasTemplate(data) {
     likeButton.setAttribute("class", "far fa-heart");
     buttonHeart.appendChild(likeButton);
 
+    // Gestion des likes
     data.isLiked = false;
     likeButton.addEventListener("click", function () {
       if (likeButton.classList.contains("far")) {
@@ -41,11 +51,13 @@ export function MediasTemplate(data) {
       }
     });
 
+    // Création du lien pour la lightbox
     const lienLightBox = document.createElement("a");
     lienLightBox.setAttribute("class", "lienLightBox");
     lienLightBox.setAttribute("style", "cursor:pointer");
     lienLightBox.setAttribute("onclick", `openLightbox(${index})`);
 
+    // Ajout de l'image ou de la vidéo dans le lien de la lightbox
     if (data.image) {
       const img = createImagePicture();
       lienLightBox.appendChild(img);
@@ -53,6 +65,8 @@ export function MediasTemplate(data) {
       const video = createVideoPicture();
       lienLightBox.appendChild(video);
     }
+
+    // Assemblage des éléments
     article.appendChild(lienLightBox);
     article.appendChild(section);
     section.appendChild(p);
@@ -63,6 +77,7 @@ export function MediasTemplate(data) {
     return article;
   }
 
+  // Fonction pour créer et retourner l'élément DOM représentant une image
   function createImagePicture() {
     const img = document.createElement("img");
     img.setAttribute("src", picture);
@@ -70,6 +85,8 @@ export function MediasTemplate(data) {
     img.setAttribute("aria-role", "img");
     return img;
   }
+
+  // Fonction pour créer et retourner l'élément DOM représentant une vidéo
   function createVideoPicture() {
     const video = document.createElement("video");
     const source = document.createElement("source");
@@ -90,6 +107,7 @@ export function MediasTemplate(data) {
     return video;
   }
 
+  // Fonction pour créer et retourner l'élément DOM représentant la lightbox
   function creatLightbox() {
     const slide = document.createElement("div");
     slide.setAttribute("class", "slide");
@@ -99,6 +117,7 @@ export function MediasTemplate(data) {
     h3.textContent = title;
     let lightboxDiv;
 
+    // Ajout de l'image ou de la vidéo à la lightbox
     if (data.image) {
       lightboxDiv = createImagePicture();
     } else {
@@ -106,10 +125,13 @@ export function MediasTemplate(data) {
       lightboxDiv.setAttribute("controls", true);
     }
 
+    // Assemblage des éléments
     slide.appendChild(lightboxDiv);
     slide.appendChild(h3);
     return slide;
   }
+
+  // Retour des éléments et des fonctions utiles
   return {
     id,
     title,

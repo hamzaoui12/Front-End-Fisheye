@@ -1,50 +1,46 @@
-const filterMenuButton = document.querySelector(".btn_list");
-const filterMenu = document.querySelector(".dropdown_content");
-filterMenuButton.addEventListener("click", dropdown);
+// Sélection du bouton de menu et du menu lui-même
+const menuBtn = document.querySelector(".btn_list");
+const menu = document.querySelector(".dropdown_content");
 
-function dropdown() {
-  const filterButtons = document.querySelectorAll(".dropdown_content button");
-  const isExpanded =
-    filterMenuButton.getAttribute("aria-expanded") === "true" || false;
+// Ajout d'un écouteur d'événement pour le clic sur le bouton de menu
+menuBtn.addEventListener("click", toggleMenu);
 
-  if (isExpanded) {
-    filterMenu.style.display = "none";
-    filterMenuButton.focus();
-  } else {
-    filterMenu.style.display = "contents";
-  }
+// Fonction pour basculer l'affichage du menu
+function toggleMenu() {
+  const isExpanded = menuBtn.getAttribute("aria-expanded") === "true";
 
-  filterMenuButton.setAttribute("aria-expanded", !isExpanded);
+  menu.style.display = isExpanded ? "none" : "contents";
+
+  menuBtn.setAttribute("aria-expanded", !isExpanded);
+
   document.querySelector(".fa-chevron-down").classList.toggle("rotate");
 }
 
+// Attente du chargement complet du DOM
 document.addEventListener("DOMContentLoaded", function () {
   const currentFilter = document.querySelector("#current_filter");
-  const allFilters = Array.from(
-    document.querySelectorAll(".dropdown_content li button")
+  const filterButtons = document.querySelectorAll(
+    ".dropdown_content li button"
   );
 
-  let filterAlreadySelected = allFilters.find(
-    (filter) => filter.textContent == currentFilter.textContent
+  let selectedFilterBtn = Array.from(filterButtons).find(
+    (btn) => btn.textContent === currentFilter.textContent
   );
 
-  filterAlreadySelected.parentElement.style.display = "none";
+  selectedFilterBtn.parentElement.style.display = "none";
 
-  allFilters.forEach((filter) => {
-    filter.addEventListener("click", () => {
-      currentFilter.textContent = filter.textContent;
+  // Ajout d'écouteurs d'événements pour chaque bouton de filtre
+  filterButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      currentFilter.textContent = btn.textContent;
 
-      const parentLi = filter.parentElement;
-      parentLi.style.display = "none";
+      btn.parentElement.style.display = "none";
 
-      if (filterAlreadySelected) {
-        const previousParentLi = filterAlreadySelected.parentElement;
-        previousParentLi.style.display = "block";
-      }
+      if (selectedFilterBtn)
+        selectedFilterBtn.parentElement.style.display = "block";
 
-      filterAlreadySelected = filter;
-
-      dropdown();
+      selectedFilterBtn = btn;
+      toggleMenu();
     });
   });
 });

@@ -1,55 +1,67 @@
-function openLightbox(index) {
+// Fonction pour ouvrir la lightbox et afficher la diapositive correspondante
+function ouvrirLightbox(index) {
   const modal = document.querySelector(".lightbox");
-  modal.style.display = "block";
-  slideIndex = parseInt(index) + 1;
-  showSlides(slideIndex);
+  modal.style.display = "block"; 
+  slideIndex = parseInt(index) + 1; 
+  afficherDiapositive(slideIndex); 
 }
 
-function closeLightbox() {
+// Fonction pour fermer la lightbox
+function fermerLightbox() {
   const modal = document.querySelector(".lightbox");
-  modal.style.display = "none";
+  modal.style.display = "none"; 
 }
+
+// Initialiser l'index de la diapositive et afficher la première diapositive
 let slideIndex = 1;
-showSlides(slideIndex);
+afficherDiapositive(slideIndex);
 
-function next() {
+// Fonction pour afficher la diapositive suivante
+function diapoSuivante() {
   slideIndex = slideIndex + 1;
-  showSlides(slideIndex);
+  afficherDiapositive(slideIndex);
 }
-function previous() {
+
+// Fonction pour afficher la diapositive précédente
+function diapoPrecedente() {
   slideIndex = slideIndex - 1;
-  showSlides(slideIndex);
+  afficherDiapositive(slideIndex);
 }
 
-function showSlides(slideIndex) {
-  let slides = document.getElementsByClassName("slide");
+// Fonction pour afficher la diapositive correspondante à l'index spécifié
+function afficherDiapositive(slideIndex) {
+  let diapositives = document.getElementsByClassName("slide");
 
-  if (slideIndex > slides.length) {
-    slideIndex = 0;
+  // Gérer les conditions de bord pour l'index de la diapositive
+  if (slideIndex > diapositives.length) {
+    slideIndex = 1; 
   }
   if (slideIndex < 1) {
-    slideIndex = slides.length;
+    slideIndex = diapositives.length; 
   }
 
-  for (let i = 0; i < slides.length; i++) {
-    slides[i].style.display = "none";
+  // Masquer toutes les diapositives
+  for (let i = 0; i < diapositives.length; i++) {
+    diapositives[i].style.display = "none";
   }
 
+  // Afficher la diapositive correspondante à l'index spécifié
   if (slideIndex - 1 >= 0) {
-    console.log(slideIndex + "-1");
-    slides[slideIndex - 1].style.display = "block";
+    diapositives[slideIndex - 1].style.display = "block";
   }
 }
+
+// Écouteur d'événements pour gérer la navigation au clavier
 document.addEventListener("keyup", (e) => {
   switch (e.key) {
     case "Escape":
-      closeLightbox();
+      fermerLightbox();
       break;
     case "ArrowLeft":
-      previous();
+      diapoPrecedente();
       break;
     case "ArrowRight":
-      next();
+      diapoSuivante(); 
       break;
   }
 });

@@ -1,8 +1,12 @@
+// Import des templates pour les photographes et les médias
 import { photographerTemplate } from "../templates/photographer.js";
 import { MediasTemplate } from "../templates/pictureMedia.js";
+
+// Récupération de l'identifiant du photographe depuis l'URL
 const urlParams = new URLSearchParams(window.location.search);
 const id = urlParams.get("id");
 
+// Fonction asynchrone pour obtenir les données du photographe à partir de son identifiant
 async function getPhotographer(id) {
   const response = await fetch("data/photographers.json");
   const data = await response.json();
@@ -11,6 +15,8 @@ async function getPhotographer(id) {
   );
   return photographer;
 }
+
+// Fonction asynchrone pour afficher les données du photographe dans la section appropriée du DOM
 async function displayDataPhotographer(photographer) {
   const photographHeader = document.querySelector(".photograph-header");
   const photographerModel = photographerTemplate(photographer);
@@ -22,6 +28,7 @@ async function displayDataPhotographer(photographer) {
   photographHeader.appendChild(photographerDom);
 }
 
+// Fonction asynchrone pour obtenir les médias associés à l'identifiant du photographe
 async function getMediaByPhotographerId(id) {
   const response = await fetch("data/photographers.json");
   const data = await response.json();
@@ -34,9 +41,12 @@ async function getMediaByPhotographerId(id) {
   }
   return photographerMedia;
 }
+
+// Fonction asynchrone pour afficher les médias dans la section appropriée du DOM
 async function displayMedias(medias) {
   const picturesSection = document.querySelector(".afficherMedias");
   picturesSection.innerHTML = "";
+
   if (picturesSection) {
     medias.forEach((picture, index) => {
       const mediasModel = MediasTemplate(picture);
@@ -47,20 +57,26 @@ async function displayMedias(medias) {
     });
   }
 }
+
+// Fonction asynchrone pour afficher la lightbox
 async function displayLightbox(media) {
   const container = document.querySelector(".lightbox_modal");
   const slide = document.createElement("div");
   slide.setAttribute("class", "slide");
   container.innerHTML = "";
+
   media.forEach((picture) => {
     const mediasModel = MediasTemplate(picture);
     const lightboxCardDOM = mediasModel.creatLightbox();
     container.appendChild(lightboxCardDOM);
   });
 }
+
+// Fonction pour calculer le total des likes
 function CalculTotalLikes(medias) {
   const encart = document.getElementById("nbLikes");
   let totalLikes = 0;
+
   medias.forEach((picture) => {
     const mediasModel = MediasTemplate(picture);
     let id = mediasModel.id;
@@ -69,6 +85,7 @@ function CalculTotalLikes(medias) {
     mediasModel.isLiked = false;
 
     let likeButton = document.getElementById(id);
+
     if (likeButton) {
       likeButton.addEventListener("click", function () {
         if (mediasModel.isLiked) {
@@ -83,6 +100,8 @@ function CalculTotalLikes(medias) {
     }
   });
 }
+
+// Fonction asynchrone pour trier les médias
 async function trieMedia(medias) {
   const allFilters = Array.from(
     document.querySelectorAll(".dropdown_content li button")
@@ -117,6 +136,8 @@ async function trieMedia(medias) {
     });
   });
 }
+
+// Fonction d'initialisation pour exécuter les étapes nécessaires au chargement initial des données
 async function init() {
   const photographer = await getPhotographer(id);
   displayDataPhotographer(photographer);
@@ -124,4 +145,6 @@ async function init() {
   displayMedias(medias);
   trieMedia(medias);
 }
+
+// Appel de la fonction d'initialisation au chargement de la page
 init();

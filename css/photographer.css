@@ -74,6 +74,12 @@
     height: 100%;
     width: 100%;
     background-color: rgba(72, 75, 103, 0.4);
+      overflow-y: auto; /* Activer le défilement vertical si le contenu dépasse */
+    
+    .no-scroll {
+      overflow: hidden; /* Empêche le défilement de la page principale */
+    }
+    
   }
   
   
@@ -120,7 +126,9 @@
     align-items: flex-start;
   }
   
-  
+  .error-message {
+    color: rgb(173, 55, 55);
+  }
   .contact_form label {
     color: #312e2e;
     font-size: 26px;
@@ -142,7 +150,7 @@
   }
   .contact_form textarea {
     width: 100%;
-    height: 80px;
+    height: 200px;
     border: none;
     border-radius: 5px;
   }
