@@ -11,7 +11,7 @@
     flex-direction: row-reverse;
     justify-content: space-between;
     align-items: center;
-    text-align: center;
+    
     padding: 30px;
   }
   
@@ -23,7 +23,7 @@
   }
   
   .photograph-header .photographer_name {
-    font-size: 64px;
+    font-size: 40px;
     font-weight: 400;
     color: #d3573c;
     margin: 0;
@@ -42,7 +42,6 @@
   
   .photograph-header .photographer_tagline {
     padding-top: 10px;
-    font-size: 18px;
     font-weight: 400;
     color: gray;
     margin: 0;

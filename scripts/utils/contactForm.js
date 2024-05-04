@@ -19,7 +19,7 @@ function closeModal() {
 // Fonction pour réinitialiser les champs du formulaire
 function resetForm() {
   document.getElementById("firstName").value = ""; 
-  document.getElementById("LastName").value = ""; 
+  document.getElementById("lastName").value = ""; 
   document.getElementById("email").value = ""; 
   document.getElementById("message").value = ""; 
 }
@@ -35,7 +35,7 @@ function resetErrors() {
 // Fonction pour valider le formulaire
 function validateForm() {
   const firstName = document.getElementById("firstName").value; 
-  const lastName = document.getElementById("LastName").value; 
+  const lastName = document.getElementById("lastName").value; 
   const email = document.getElementById("email").value; 
   const message = document.getElementById("message").value; 
 
@@ -81,7 +81,7 @@ function validateForm() {
 function sendFormContact() {
   if (validateForm()) {
     const name = document.getElementById("firstName").value; 
-    const lastName = document.getElementById("LastName").value; 
+    const lastName = document.getElementById("lastName").value; 
     const email = document.getElementById("email").value; 
     const message = document.getElementById("message").value; 
 
