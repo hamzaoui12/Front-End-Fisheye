@@ -1,67 +1,63 @@
-// Fonction pour ouvrir la lightbox et afficher la diapositive correspondante
-function ouvrirLightbox(index) {
+// Fonction pour ouvrir la lightbox et afficher une image spécifique
+function openLightbox(index) {
   const modal = document.querySelector(".lightbox");
-  modal.style.display = "block"; 
-  slideIndex = parseInt(index) + 1; 
-  afficherDiapositive(slideIndex); 
+  modal.style.display = "block";
+  slideIndex = parseInt(index) + 1;
+  showSlides(slideIndex);
 }
 
 // Fonction pour fermer la lightbox
-function fermerLightbox() {
+function closeLightbox() {
   const modal = document.querySelector(".lightbox");
-  modal.style.display = "none"; 
+  modal.style.display = "none";
 }
 
-// Initialiser l'index de la diapositive et afficher la première diapositive
 let slideIndex = 1;
-afficherDiapositive(slideIndex);
+showSlides(slideIndex);
 
-// Fonction pour afficher la diapositive suivante
-function diapoSuivante() {
+// Fonction pour passer à la diapositive suivante
+function next() {
   slideIndex = slideIndex + 1;
-  afficherDiapositive(slideIndex);
+  showSlides(slideIndex);
 }
 
-// Fonction pour afficher la diapositive précédente
-function diapoPrecedente() {
+// Fonction pour revenir à la diapositive précédente
+function previous() {
   slideIndex = slideIndex - 1;
-  afficherDiapositive(slideIndex);
+  showSlides(slideIndex);
 }
 
-// Fonction pour afficher la diapositive correspondante à l'index spécifié
-function afficherDiapositive(slideIndex) {
-  let diapositives = document.getElementsByClassName("slide");
+// Fonction pour afficher la diapositive correspondant à l'index donné
+function showSlides(slideIndex) {
+  let slides = document.getElementsByClassName("slide");
 
-  // Gérer les conditions de bord pour l'index de la diapositive
-  if (slideIndex > diapositives.length) {
-    slideIndex = 1; 
+  if (slideIndex > slides.length) {
+    slideIndex = 0;
   }
   if (slideIndex < 1) {
-    slideIndex = diapositives.length; 
+    slideIndex = slides.length;
   }
 
-  // Masquer toutes les diapositives
-  for (let i = 0; i < diapositives.length; i++) {
-    diapositives[i].style.display = "none";
+  for (let i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
   }
 
-  // Afficher la diapositive correspondante à l'index spécifié
   if (slideIndex - 1 >= 0) {
-    diapositives[slideIndex - 1].style.display = "block";
+    slides[slideIndex - 1].style.display = "block";
   }
 }
 
-// Écouteur d'événements pour gérer la navigation au clavier
+// Écouteur d'événements pour détecter les touches clavier pressées
 document.addEventListener("keyup", (e) => {
   switch (e.key) {
     case "Escape":
-      fermerLightbox();
+      closeLightbox();
       break;
     case "ArrowLeft":
-      diapoPrecedente();
+      previous();
       break;
     case "ArrowRight":
-      diapoSuivante(); 
+      next();
       break;
   }
 });
