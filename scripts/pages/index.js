@@ -1,15 +1,15 @@
 // Import du template pour les photographes
 import { photographerTemplate } from '../templates/photographer.js';
 
-// Fonction asynchrone pour récupérer les données des photographes depuis le fichier JSON
-async function getPhotographers() {
-  const response = await fetch("data/photographers.json");
-  const photographers = await response.json();
-  return photographers;
+// Fonction pour récupérer les données des photographes depuis le fichier JSON
+function getPhotographers() {
+  return fetch("data/photographers.json")
+    .then(response => response.json())
+    .catch(error => console.error('Erreur lors de la récupération des photographes :', error));
 }
 
-// Fonction asynchrone pour afficher les données des photographes dans la section appropriée du DOM
-async function displayData(photographers) {
+// Fonction pour afficher les données des photographes dans la section appropriée du DOM
+function displayData(photographers) {
   const photographersSection = document.querySelector(".photographer_section");
 
   photographers.forEach((photographer) => {
@@ -20,9 +20,10 @@ async function displayData(photographers) {
 }
 
 // Fonction d'initialisation pour exécuter les étapes nécessaires au chargement initial des données
-async function init() {
-  const { photographers } = await getPhotographers();
-  displayData(photographers);
+function init() {
+  getPhotographers()
+    .then(({ photographers }) => displayData(photographers))
+    .catch(error => console.error('Erreur lors de l\'initialisation :', error));
 }
 
 // Appel de la fonction d'initialisation au chargement de la page

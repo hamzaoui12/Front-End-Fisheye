@@ -6,18 +6,16 @@ import { MediasTemplate } from "../templates/pictureMedia.js";
 const urlParams = new URLSearchParams(window.location.search);
 const id = urlParams.get("id");
 
-// Fonction asynchrone pour obtenir les données du photographe à partir de son identifiant
-async function getPhotographer(id) {
-  const response = await fetch("data/photographers.json");
-  const data = await response.json();
-  const photographer = data.photographers.find(
-    (photographer) => photographer.id == id
-  );
-  return photographer;
+// Fonction pour récupérer les données du photographe à partir de son identifiant
+function getPhotographer(id) {
+  return fetch("data/photographers.json")
+    .then(response => response.json())
+    .then(data => data.photographers.find(photographer => photographer.id == id))
+    .catch(error => console.error('Erreur lors de la récupération du photographe :', error));
 }
 
-// Fonction asynchrone pour afficher les données du photographe dans la section appropriée du DOM
-async function displayDataPhotographer(photographer) {
+// Fonction pour afficher les données du photographe dans la section appropriée du DOM
+function displayDataPhotographer(photographer) {
   const photographHeader = document.querySelector(".photograph-header");
   const photographerModel = photographerTemplate(photographer);
   const photographerDom = photographerModel.getUserCardDOM();
@@ -28,22 +26,16 @@ async function displayDataPhotographer(photographer) {
   photographHeader.appendChild(photographerDom);
 }
 
-// Fonction asynchrone pour obtenir les médias associés à l'identifiant du photographe
-async function getMediaByPhotographerId(id) {
-  const response = await fetch("data/photographers.json");
-  const data = await response.json();
-  const photographerMedia = [];
-
-  for (const media of data.media) {
-    if (media.photographerId == id) {
-      photographerMedia.push(media);
-    }
-  }
-  return photographerMedia;
+// Fonction pour obtenir les médias associés à l'identifiant du photographe
+function getMediaByPhotographerId(id) {
+  return fetch("data/photographers.json")
+    .then(response => response.json())
+    .then(data => data.media.filter(media => media.photographerId == id))
+    .catch(error => console.error('Erreur lors de la récupération des médias :', error));
 }
 
-// Fonction asynchrone pour afficher les médias dans la section appropriée du DOM
-async function displayMedias(medias) {
+// Fonction pour afficher les médias dans la section appropriée du DOM
+function displayMedias(medias) {
   const picturesSection = document.querySelector(".afficherMedias");
   picturesSection.innerHTML = "";
 
@@ -58,8 +50,8 @@ async function displayMedias(medias) {
   }
 }
 
-// Fonction asynchrone pour afficher la lightbox
-async function displayLightbox(media) {
+// Fonction pour afficher la lightbox
+function displayLightbox(media) {
   const container = document.querySelector(".lightbox_modal");
   const slide = document.createElement("div");
   slide.setAttribute("class", "slide");
@@ -101,8 +93,8 @@ function CalculTotalLikes(medias) {
   });
 }
 
-// Fonction asynchrone pour trier les médias
-async function trieMedia(medias) {
+// Fonction pour trier les médias
+function trieMedia(medias) {
   const allFilters = Array.from(
     document.querySelectorAll(".dropdown_content li button")
   );
@@ -138,12 +130,17 @@ async function trieMedia(medias) {
 }
 
 // Fonction d'initialisation pour exécuter les étapes nécessaires au chargement initial des données
-async function init() {
-  const photographer = await getPhotographer(id);
-  displayDataPhotographer(photographer);
-  const medias = await getMediaByPhotographerId(id);
-  displayMedias(medias);
-  trieMedia(medias);
+function init() {
+  getPhotographer(id)
+    .then(photographer => {
+      displayDataPhotographer(photographer);
+      return getMediaByPhotographerId(id);
+    })
+    .then(medias => {
+      displayMedias(medias);
+      trieMedia(medias);
+    })
+    .catch(error => console.error('Erreur lors de l\'initialisation :', error));
 }
 
 // Appel de la fonction d'initialisation au chargement de la page
