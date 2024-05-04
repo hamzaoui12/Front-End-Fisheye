@@ -101,7 +101,7 @@ h1 {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    margin-right: 30%;
+    margin-right: 23%;
     font-weight: bold;
     font-size: 20px;
     color: #901C1C;
@@ -186,3 +186,30 @@ h1 {
     font-size: 24px;
 
 }
+@media screen and (max-width: 1200px) {
+    .photographer_section {
+        grid-template-columns: 1fr 1fr;
+    }
+    .afficherMedias .media {
+        width: 50%; /* Affichage de deux médias par ligne */
+    }
+    .afficherMedias article section {
+        margin-right: 25%;
+        
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .photographer_section {
+        grid-template-columns: 1fr;
+    }
+    .afficherMedias .media {
+        width: 100%; /* Affichage d'un média par ligne */
+    }
+    .afficherMedias article section {
+        margin-right: 28%;
+        
+    }
+}
+
+

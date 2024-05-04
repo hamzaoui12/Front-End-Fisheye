@@ -172,7 +172,7 @@
   }
   .likes {
     width: 50%;
-    font-size: 24px;
+    font-size: 20px;
   }
   
   .textEncart {
@@ -182,7 +182,7 @@
   
   #price {
     font-weight: bold;
-    font-size: 24px;
+    font-size: 20px;
   }
   
   /* css pour dropdown*/
@@ -264,3 +264,4 @@
   main.opened {
     opacity: 1;
   }
+  
