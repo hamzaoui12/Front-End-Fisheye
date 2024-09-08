@@ -73,15 +73,11 @@
     height: 100%;
     width: 100%;
     background-color: rgba(72, 75, 103, 0.4);
-      overflow-y: auto; /* Activer le défilement vertical si le contenu dépasse */
-    
-    .no-scroll {
-      overflow: hidden; /* Empêche le défilement de la page principale */
-    }
-    
+    overflow-y: auto; /* Activer le défilement vertical si le contenu dépasse */
   }
-  
-  
+  .no-scroll {
+      overflow: hidden; /* Empêche le défilement de la page principale */
+  }
   
   .modal {
     border-radius: 5px;
