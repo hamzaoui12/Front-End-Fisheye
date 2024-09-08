@@ -70,23 +70,20 @@ h1 {
 /* css pour les media pictures*/
 
 .afficherMedias {
-    padding-top: 60px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    width: 95%;
-    height: 300px;
-    margin: 0 100px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin: 1rem 6.5rem;
+  gap: 2rem;
 }
 .afficherMedias .media {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    width: 33%;
+    width: 100%;
 }
 .afficherMedias article img ,
 .afficherMedias article video{
-    width: 350px;
+    width: 100%;
     height: 351px;
     margin: auto;
     object-position: top;
@@ -101,11 +98,17 @@ h1 {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    margin-right: 20%;
     font-weight: bold;
     font-size: 20px;
     color: #901C1C;
 }
+
+.afficherMedias article section div {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
 /* modal lightbox*/
 .lightbox {
     display: none;
@@ -152,7 +155,7 @@ h1 {
 
 .lightbox button {
     cursor: pointer;
-    transition: opacity .3s;
+    transition: opacity 0.3s;
     z-index: 12;
     border: none;
     background-color: transparent;
@@ -188,28 +191,23 @@ h1 {
 }
 @media screen and (max-width: 1200px) {
     .photographer_section {
-        grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr;
     }
-    .afficherMedias .media {
-        width: 50%; /* Affichage de deux médias par ligne */
+    .afficherMedias {
+      grid-template-columns: repeat(2, 1fr);
     }
-    .afficherMedias article section {
-        margin-right: 25%;
-        
-    }
-}
-
-@media screen and (max-width: 768px) {
+  }
+  
+  @media screen and (max-width: 768px) {
     .photographer_section {
-        grid-template-columns: 1fr;
+      grid-template-columns: 1fr;
     }
-    .afficherMedias .media {
-        width: 100%; /* Affichage d'un média par ligne */
+    .afficherMedias {
+      grid-template-columns: repeat(1, 1fr);
     }
     .afficherMedias article section {
-        margin-right: 28%;
-        
+      margin-right: 28%;
     }
-}
+  }
 
 
